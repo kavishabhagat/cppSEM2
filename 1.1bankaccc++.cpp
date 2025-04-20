@@ -5,7 +5,7 @@ Date of Modification- 15 January 2025
 #include <iostream>
 using namespace std;
 
-class bankaccount
+class Bankaccount
 {
     string name;
     int accno;
@@ -58,7 +58,7 @@ public:
 
 int main()
 {
-    bankaccount x;
+    Bankaccount x;
     int y;
 
     x.oppenacc();
