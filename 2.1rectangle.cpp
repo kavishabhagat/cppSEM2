@@ -4,7 +4,7 @@ Date of Modification- 14 February 2025
 
 #include <iostream>
 using namespace std;
-class rectangle
+class Rectangle
 {
     int length,width;
 public:
@@ -32,7 +32,7 @@ public:
 };
 int main()
 {
-    rectangle r[50];
+    Rectangle r[50];
     int count = 0;
     char choice;
     do
