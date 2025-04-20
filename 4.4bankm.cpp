@@ -7,14 +7,14 @@
 #include<string>
 using namespace std;
 
-class banking_account
+class BankingAccount
 {
 protected:
     int acc_num;
     float acc_bal;
     float pre_bal;
 public:
-    banking_account(int n, float b)
+    BankingAccount(int n, float b)
     {
         acc_num = n;
         acc_bal = b;
@@ -72,11 +72,11 @@ public:
     }
 };
 
-class saving_account : public banking_account
+class saving_account : public BankingAccount
 {
     int interest_rate;
 public:
-    saving_account(int num, float bal, int r) : banking_account(num, bal)
+    saving_account(int num, float bal, int r) : BankingAccount(num, bal)
     {
         interest_rate = r;
     }
@@ -97,11 +97,11 @@ public:
     }
 };
 
-class current_account : public banking_account
+class current_account : public BankingAccount
 {
     float limit;
 public:
-    current_account(int num, float bal, float lim) : banking_account(num, bal)
+    current_account(int num, float bal, float lim) : BankingAccount(num, bal)
     {
         limit = lim;
     }
