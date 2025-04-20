@@ -4,20 +4,20 @@ Date of Modification- 28 February 2025
 #include <iostream>
 using namespace std;
 
-class bankaccount {
+class Bankaccount {
     string name;
     int accno, balance;
 
 public:
     // Default constructor
-    bankaccount() {
+    Bankaccount() {
         name = "n/a";
         accno = 0;
         balance = 0;
     }
 
     // Parameterized constructor
-    bankaccount(string n, int a, int b) {
+    Bankaccount(string n, int a, int b) {
         name = n;
         accno = a;
         balance = b;
@@ -46,7 +46,7 @@ public:
 };
 
 int main() {
-    bankaccount accounts[5];
+    Bankaccount accounts[5];
 
     // Initializing accounts with correct order
     accounts[0] = bankaccount("Alice", 101, 5000);
