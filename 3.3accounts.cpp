@@ -1,18 +1,18 @@
 /* THIS PROGRAM IS PREPARED BY 24CE007_KAVISHA
    Date of Modification- 12 March 2025
-   3.3 MANAGING BANCK ACCOUNTS */
+   3.3 MANAGING BANCK Accounts */
 
 #include <iostream>
 using namespace std;
 
-class accounts
+class Accounts
 {
     int accno;
     string name;
     int balance;
 
 public:
-    accounts(int a, string n, int b)
+    Accounts(int a, string n, int b)
     {
         accno = a;
         name = n;
@@ -47,7 +47,7 @@ public:
         }
     }
 
-    void transfer(accounts* target, int amount)
+    void transfer(Accounts* target, int amount)
     {
         if (!target)
         {
@@ -86,9 +86,9 @@ public:
 };
 
 
-accounts* findaccount(accounts** a, int totalaccounts, int accno)
+Accounts* findaccount(Accounts** a, int totalAccounts, int accno)
 {
-    for (int i = 0; i < totalaccounts; ++i)
+    for (int i = 0; i < totalAccounts; ++i)
     {
         if (a[i]->getAccountNumber() == accno)
         {
@@ -100,11 +100,11 @@ accounts* findaccount(accounts** a, int totalaccounts, int accno)
 
 int main()
 {
-    accounts* a[100];
-    int totalaccounts = 0;
+    Accounts* a[100];
+    int totalAccounts = 0;
     int choice;
 
-    // Menu-driven system to input accounts and operations
+    // Menu-driven system to input Accounts and operations
     do
     {
         cout << "\n----- MENU -----\n";
@@ -133,7 +133,7 @@ int main()
             cout << "Enter Initial Balance: ";
             cin >> balance;
 
-            a[totalaccounts++] = new accounts(accno, name, balance);
+            a[totalAccounts++] = new Accounts(accno, name, balance);
             cout << "Account created successfully!\n";
             break;
         }
@@ -146,7 +146,7 @@ int main()
             cout << "Enter Amount to Deposit: ";
             cin >> amount;
 
-            accounts* acc = findaccount(a, totalaccounts, accno);
+            Accounts* acc = findaccount(a, totalAccounts, accno);
             if (acc)
             {
                 acc->deposit(amount);
@@ -166,7 +166,7 @@ int main()
             cout << "Enter Amount to Withdraw: ";
             cin >> amount;
 
-            accounts* acc = findaccount(a, totalaccounts, accno);
+            Accounts* acc = findaccount(a, totalAccounts, accno);
             if (acc)
             {
                 acc->withdraw(amount);
@@ -188,8 +188,8 @@ int main()
             cout << "Enter Amount to Transfer: ";
             cin >> amount;
 
-            accounts* sourceAcc = findaccount(a, totalaccounts, sourceAccno);
-            accounts* targetAcc = findaccount(a, totalaccounts, targetAccno);
+            Accounts* sourceAcc = findaccount(a, totalAccounts, sourceAccno);
+            Accounts* targetAcc = findaccount(a, totalAccounts, targetAccno);
 
             if (sourceAcc && targetAcc)
             {
@@ -197,7 +197,7 @@ int main()
             }
             else
             {
-                cout << "One or both accounts not found!\n";
+                cout << "One or both Accounts not found!\n";
             }
             break;
         }
@@ -208,7 +208,7 @@ int main()
             cout << "Enter Account Number to Display Info: ";
             cin >> x;
 
-            accounts* acc = findaccount(a, totalaccounts, x);
+            Accounts* acc = findaccount(a, totalAccounts, x);
             if (acc)
             {
                 cout<<"DISPLAYING DETAILS FOR ACCOUNT NUMBER "<< x <<":"<<endl;
@@ -232,7 +232,7 @@ int main()
     while (choice != 6);
 
 
-    for (int i = 0; i < totalaccounts; ++i)
+    for (int i = 0; i < totalAccounts; ++i)
     {
         delete a[i];
     }
