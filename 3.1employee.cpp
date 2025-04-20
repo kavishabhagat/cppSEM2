@@ -1,10 +1,10 @@
 /* THIS PROGRAM IS PREPARED BY 24CE007_KAVISHA
    Date of Modification- 8 March 2025
-   3.1 EMPLOYEE SALARY MANAGEMENT */
+   3.1 Employee SALARY MANAGEMENT */
 
 #include<iostream>
 using namespace std;
-class employee
+class Employee
 {
     string name;
     int salary;
@@ -12,11 +12,11 @@ class employee
     int totalsalary;
 
 public:
-    employee()//default constructor
+    Employee()//default constructor
     {
         bonus=1500;//default bonus
     }
-    employee(string n,int s,int b)//parametarised constructor
+    Employee(string n,int s,int b)//parametarised constructor
     {
         name=n;
         salary=s;
@@ -42,7 +42,7 @@ int main()
     int n;
     cout<<"Enter the Number of Employee you want to Add the Datas For:";
     cin>>n;
-    employee** e = new employee*[n];
+    Employee** e = new Employee*[n];
 
     for(int i=0;i<n;i++)
     {
@@ -53,20 +53,20 @@ int main()
         cin>>name;
         cout<<"Enter the Salary of Employee " <<i+1<<":";
         cin>>salary;
-        cout<<"Do you wnat to enter extra bonus for this employee? (y/n)";
+        cout<<"Do you wnat to enter extra bonus for this Employee? (y/n)";
         cin>>x;
         if(x=="y" || x=="Y")
         {
-            cout<<"Enter the bonus ammount you want to add for employee " <<i+1<<":";
+            cout<<"Enter the bonus ammount you want to add for Employee " <<i+1<<":";
             cin>>bonus;
-            e[i]= new employee(name,salary,bonus);
+            e[i]= new Employee(name,salary,bonus);
 
 
         }
         else if (x=="n" || x=="N")
         {
             cout<<"Applying Default Bonus for this Employee"<<endl;
-            e[i]=new employee(name,salary,1500);
+            e[i]=new Employee(name,salary,1500);
         }
         else
         {
