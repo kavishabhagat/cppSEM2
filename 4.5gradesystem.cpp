@@ -23,10 +23,10 @@ public:
     }
 };
 
-class Undergraduate : public GradingSystem
+class UnderGraduate : public GradingSystem
 {
 public:
-    Undergraduate(string name, float m) : GradingSystem(name, m) {}
+    UnderGraduate(string name, float m) : GradingSystem(name, m) {}
 
     void computeGrade() override
     {
@@ -59,10 +59,10 @@ public:
     }
 };
 
-class Postgraduate : public GradingSystem
+class PostGraduate : public GradingSystem
 {
 public:
-    Postgraduate(string name, float m) : GradingSystem(name, m) {}
+    PostGraduate(string name, float m) : GradingSystem(name, m) {}
 
     void computeGrade() override
     {
@@ -106,8 +106,8 @@ int main()
 
     do
     {
-        cout << "1. Add Undergraduate Student\n"
-             << "2. Add Postgraduate Student\n"
+        cout << "1. Add UnderGraduate Student\n"
+             << "2. Add PostGraduate Student\n"
              << "3. Display Student Grades\n"
              << "4. Exit\n";
         cout << "Enter your choice: ";
@@ -118,22 +118,22 @@ int main()
         switch (choice)
         {
         case 1:
-            cout << "Enter Undergraduate student name: ";
+            cout << "Enter UnderGraduate student name: ";
             cin >> name;
             cout << "Enter marks for " << name << ": ";
             cin >> marks;
-            student = new Undergraduate(name, marks);
+            student = new UnderGraduate(name, marks);
             students[student_count++] = student;
             student->displayStudentInfo();
             student->computeGrade();
             break;
 
         case 2:
-            cout << "Enter Postgraduate student name: ";
+            cout << "Enter PostGraduate student name: ";
             cin >> name;
             cout << "Enter marks for " << name << ": ";
             cin >> marks;
-            student = new Postgraduate(name, marks);
+            student = new PostGraduate(name, marks);
             students[student_count++] = student;
             student->displayStudentInfo();
             student->computeGrade();
