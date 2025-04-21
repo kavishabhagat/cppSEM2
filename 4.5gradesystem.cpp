@@ -14,9 +14,9 @@ protected:
 public:
     GradingSystem(string name, float m) : studentname(name), marks(m) {}
 
-    virtual void compute_grade() = 0;
+    virtual void computeGrade() = 0;
 
-    void display_student_info()
+    void displayStudentInfo()
     {
         cout << "Student Name: " << studentname << endl;
         cout << "Marks: " << marks << endl;
@@ -28,7 +28,7 @@ class Undergraduate : public GradingSystem
 public:
     Undergraduate(string name, float m) : GradingSystem(name, m) {}
 
-    void compute_grade() override
+    void computeGrade() override
     {
         string grade;
         if (marks >= 90)
@@ -64,7 +64,7 @@ class Postgraduate : public GradingSystem
 public:
     Postgraduate(string name, float m) : GradingSystem(name, m) {}
 
-    void compute_grade() override
+    void computeGrade() override
     {
         string grade;
         if (marks >= 85)
@@ -124,8 +124,8 @@ int main()
             cin >> marks;
             student = new Undergraduate(name, marks);
             students[student_count++] = student;
-            student->display_student_info();
-            student->compute_grade();
+            student->displayStudentInfo();
+            student->computeGrade();
             break;
 
         case 2:
@@ -135,8 +135,8 @@ int main()
             cin >> marks;
             student = new Postgraduate(name, marks);
             students[student_count++] = student;
-            student->display_student_info();
-            student->compute_grade();
+            student->displayStudentInfo();
+            student->computeGrade();
             break;
 
         case 3:
@@ -150,8 +150,8 @@ int main()
                 for (int i = 0; i < student_count; i++)
                 {
                     cout<<"STUDENT "<<i+1<<":"<<endl;
-                    students[i]->display_student_info();
-                    students[i]->compute_grade();
+                    students[i]->displayStudentInfo();
+                    students[i]->computeGrade();
                 }
             }
             break;
