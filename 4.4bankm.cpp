@@ -10,23 +10,23 @@ using namespace std;
 class BankingAccount
 {
 protected:
-    int acc_num;
-    float acc_bal;
-    float pre_bal;
+    int accno;
+    float accbal;
+    float prebal;
 public:
     BankingAccount(int n, float b)
     {
-        acc_num = n;
-        acc_bal = b;
+        accno = n;
+        accbal = b;
     }
     virtual void deposit(float amount, const string& transaction_file)
     {
-        pre_bal = acc_bal;
-        acc_bal += amount;
+        prebal = accbal;
+        accbal += amount;
         ofstream file(transaction_file, ios::app);
         if (file.is_open())
         {
-            file << "Deposited: " << amount << " | Balance: " << acc_bal << endl;
+            file << "Deposited: " << amount << " | Balance: " << accbal << endl;
             file.close();
         }
         else
@@ -36,14 +36,14 @@ public:
     }
     virtual void withdraw(float amount, const string& transaction_file)
     {
-        pre_bal = acc_bal;
-        if (acc_bal >= amount)
+        prebal = accbal;
+        if (accbal >= amount)
         {
-            acc_bal -= amount;
+            accbal -= amount;
             ofstream file(transaction_file, ios::app);
             if (file.is_open())
             {
-                file << "Withdrawn: " << amount << " | Balance: " << acc_bal << endl;
+                file << "Withdrawn: " << amount << " | Balance: " << accbal << endl;
                 file.close();
             }
             else
@@ -56,13 +56,13 @@ public:
             cout << "Insufficient funds." << endl;
         }
     }
-    void undo_last_transaction(const string& transaction_file)
+    void undoLastTransaction(const string& transaction_file)
     {
-        acc_bal = pre_bal;
+        accbal = prebal;
         ofstream file(transaction_file, ios::app);
         if (file.is_open())
         {
-            file << "Transaction undone | Balance: " << acc_bal << endl;
+            file << "Transaction undone | Balance: " << accbal << endl;
             file.close();
         }
         else
@@ -72,22 +72,22 @@ public:
     }
 };
 
-class saving_account : public BankingAccount
+class SavingAccount : public BankingAccount
 {
-    int interest_rate;
+    int interestrate;
 public:
-    saving_account(int num, float bal, int r) : BankingAccount(num, bal)
+    SavingAccount(int num, float bal, int r) : BankingAccount(num, bal)
     {
-        interest_rate = r;
+        interestrate = r;
     }
-    void apply_interest(const string& transaction_file)
+    void applyinterest(const string& transaction_file)
     {
-        float interest = (acc_bal * interest_rate) / 100;
-        acc_bal += interest;
+        float interest = (accbal * interestrate) / 100;
+        accbal += interest;
         ofstream file(transaction_file, ios::app);
         if (file.is_open())
         {
-            file << "Applied interest: " << interest << " | Balance: " << acc_bal << endl;
+            file << "Applied interest: " << interest << " | Balance: " << accbal << endl;
             file.close();
         }
         else
@@ -97,24 +97,24 @@ public:
     }
 };
 
-class current_account : public BankingAccount
+class currentaccount : public BankingAccount
 {
     float limit;
 public:
-    current_account(int num, float bal, float lim) : BankingAccount(num, bal)
+    currentaccount(int num, float bal, float lim) : BankingAccount(num, bal)
     {
         limit = lim;
     }
     void withdraw(float amount, const string& transaction_file) override
     {
-        pre_bal = acc_bal;
-        if (acc_bal + limit >= amount)
+        prebal = accbal;
+        if (accbal + limit >= amount)
         {
-            acc_bal -= amount;
+            accbal -= amount;
             ofstream file(transaction_file, ios::app);
             if (file.is_open())
             {
-                file << "Withdrawn: " << amount << " | Balance: " << acc_bal << endl;
+                file << "Withdrawn: " << amount << " | Balance: " << accbal << endl;
                 file.close();
             }
             else
@@ -129,7 +129,7 @@ public:
     }
 };
 
-void show_transaction_history(const string& transaction_file)
+void showTransactionHistory(const string& transaction_file)
 {
     ifstream file(transaction_file);
     string line;
@@ -152,8 +152,8 @@ int main()
     int choice, acc_counter = 0;
     int number, rate;
     float balance, limit;
-    saving_account* s = nullptr;
-    current_account* c = nullptr;
+    SavingAccount* s = nullptr;
+    currentaccount* c = nullptr;
     string transaction_file;
 
     cout<<"MENU-"<<endl;
@@ -177,8 +177,8 @@ int main()
             cin >> balance;
             cout << "Enter interest rate: ";
             cin >> rate;
-            s = new saving_account(number, balance, rate);
-            transaction_file = "saving_account_" + to_string(number) + "_transactions.txt";
+            s = new SavingAccount(number, balance, rate);
+            transaction_file = "SavingAccount_" + to_string(number) + "_transactions.txt";
             acc_counter++;
             cout<<endl<<"YOUR SAVINGS ACCOUNT HAS BEEN CREATED!"<<endl;
             break;
@@ -190,8 +190,8 @@ int main()
             cin >> balance;
             cout << "Enter overdraft limit: ";
             cin >> limit;
-            c = new current_account(number, balance, limit);
-            transaction_file = "current_account_" + to_string(number) + "_transactions.txt";
+            c = new currentaccount(number, balance, limit);
+            transaction_file = "currentaccount_" + to_string(number) + "_transactions.txt";
             acc_counter++;
             cout<<endl<<"YOUR CURRENT ACCOUNT HAS BEEN CREATED!"<<endl;
 
@@ -262,17 +262,17 @@ int main()
             break;
 
         case 7:
-            show_transaction_history(transaction_file);
+            showTransactionHistory(transaction_file);
             break;
 
         case 8:
             if (s)
             {
-                s->undo_last_transaction(transaction_file);
+                s->undoLastTransaction(transaction_file);
             }
             else if (c)
             {
-                c->undo_last_transaction(transaction_file);
+                c->undoLastTransaction(transaction_file);
             }
             else
             {
