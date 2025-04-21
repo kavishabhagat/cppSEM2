@@ -9,16 +9,16 @@ using namespace std;
 class GradingSystem
 {
 protected:
-    string student_name;
+    string studentname;
     float marks;
 public:
-    GradingSystem(string name, float m) : student_name(name), marks(m) {}
+    GradingSystem(string name, float m) : studentname(name), marks(m) {}
 
     virtual void compute_grade() = 0;
 
     void display_student_info()
     {
-        cout << "Student Name: " << student_name << endl;
+        cout << "Student Name: " << studentname << endl;
         cout << "Marks: " << marks << endl;
     }
 };
