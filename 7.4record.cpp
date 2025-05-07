@@ -1,17 +1,12 @@
 /* THIS PROGRAM IS PREPARED BY 24CE007_KAVISHA
    Date of Modification- 1 May 2025
-   7.4 FILE- STUDENT PERFORMANCE RECORD*/
+   7.4 FILE- STUDENT PERFORMANCE RECORD USING CLASS */
+
 #include <iostream>
 #include <fstream>
 #include <iomanip>
 #include <cstring>
 using namespace std;
-
-struct Student {
-    char name[50];
-    float marks;
-    char grade;
-};
 
 // User-defined manipulator for column formatting
 ostream& tab(ostream& out) {
@@ -19,67 +14,96 @@ ostream& tab(ostream& out) {
     return out;
 }
 
-// Function to load student data from file into dynamically allocated array
-int loadStudents(Student*& students) {
-    ifstream file("student.txt");
-    if (!file) {
-        cerr << "Error: Could not open 'students.txt' for reading.\n";
-        return 0;
+class Student {
+public:
+    char name[50];
+    float marks;
+    char grade;
+
+    Student() {
+        name[0] = '\0';
+        marks = 0.0;
+        grade = 'F';
     }
 
-    int count = 0;
-    int capacity = 10;
-    students = new Student[capacity];
+    void display() const {
+        cout << tab << name
+             << tab << fixed << setprecision(2) << marks
+             << tab << grade << endl;
+    }
+};
 
-    while (!file.eof()) {
-        Student s;
-        file.getline(s.name, 50, ',');      // Name ends with comma
-        file >> s.marks;
-        file.ignore();                      // Ignore comma
-        file >> s.grade;
-        file.ignore();                      // Ignore newline
+class StudentManager {
+private:
+    Student* students;
+    int count;
+    int capacity;
 
-        if (file.fail()) break;
+public:
+    StudentManager() : students(nullptr), count(0), capacity(0) {}
 
-        if (count == capacity) {
-            // Resize array
-            int newCapacity = capacity * 2;
-            Student* temp = new Student[newCapacity];
-            for (int i = 0; i < count; ++i)
-                temp[i] = students[i];
-            delete[] students;
-            students = temp;
-            capacity = newCapacity;
+    ~StudentManager() {
+        delete[] students;
+    }
+
+    bool loadFromFile(const char* filename) {
+        ifstream file(filename);
+        if (!file) {
+            cerr << "Error: Could not open '" << filename << "' for reading.\n";
+            return false;
         }
 
-        students[count++] = s;
+        count = 0;
+        capacity = 10;
+        students = new Student[capacity];
+
+        while (!file.eof()) {
+            Student s;
+            file.getline(s.name, 50, ',');
+            file >> s.marks;
+            file.ignore();
+            file >> s.grade;
+            file.ignore();
+
+            if (file.fail()) break;
+
+            if (count == capacity) {
+                resize();
+            }
+
+            students[count++] = s;
+        }
+
+        file.close();
+        return count > 0;
     }
 
-    file.close();
-    return count;
-}
-
-// Function to display student report in a formatted table
-void displayReport(Student* students, int count) {
-    cout << "\n=== Student Performance Report ===\n\n";
-    cout << tab << "Name" << tab << "Marks" << tab << "Grade" << endl;
-    cout << setfill('-') << setw(60) << "-" << setfill(' ') << endl;
-
-    for (int i = 0; i < count; ++i) {
-        cout << tab << students[i].name
-             << tab << fixed << setprecision(2) << students[i].marks
-             << tab << students[i].grade << endl;
+    void resize() {
+        int newCapacity = capacity * 2;
+        Student* temp = new Student[newCapacity];
+        for (int i = 0; i < count; ++i)
+            temp[i] = students[i];
+        delete[] students;
+        students = temp;
+        capacity = newCapacity;
     }
-}
+
+    void displayReport() const {
+        cout << "\n=== Student Performance Report ===\n\n";
+        cout << tab << "Name" << tab << "Marks" << tab << "Grade" << endl;
+        cout << setfill('-') << setw(60) << "-" << setfill(' ') << endl;
+        for (int i = 0; i < count; ++i) {
+            students[i].display();
+        }
+    }
+};
 
 int main() {
-    Student* students = nullptr;
-    int studentCount = loadStudents(students);
-
-    if (studentCount > 0) {
-        displayReport(students, studentCount);
-        delete[] students;  // Free allocated memory
+    StudentManager manager;
+    if (manager.loadFromFile("student.txt")) {
+        manager.displayReport();
     }
 
     cout << endl << "Kavisha Bhagat 24CE007" << endl;
+    return 0;
 }
